@@ -27,6 +27,7 @@ This repo is my proof of work: real projects, real notes, real progress.
 | [`notes/`](./notes) | Topical deep-dives (hooks, the loop, REST API, WooCommerce, MySQL). |
 | [`snippets/`](./snippets) | Reusable code — PHP snippets, WP-CLI commands, SQL. |
 | [`resources.md`](./resources.md) | Curated links, docs, and courses I've found worth keeping. |
+| [`contributions.md`](./contributions.md) | Support-forum participation (fr/en) — questions answered and outcomes. |
 
 ---
 
