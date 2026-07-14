@@ -1,0 +1,32 @@
+# WordPress secrets & config
+wp-config.php
+wp-config-local.php
+*.local.php
+
+# Logs & debug
+*.log
+debug.log
+error_log
+
+# Dependencies & build
+node_modules/
+vendor/
+build/
+dist/
+
+# Environment
+.env
+.env.*
+
+# WordPress uploads / cache (if a local WP lives inside a project)
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+
+# Editor & OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
