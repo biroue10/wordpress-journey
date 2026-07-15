@@ -5,7 +5,7 @@ explaining the goal, what I built, and what I learned.
 
 ## Index
 
-_(add projects as you build them)_
+- `local-wp/` — local WordPress dev environment (Docker Compose: WordPress + MariaDB), the base site for hands-on practice.
 
 <!-- Example:
 - `hello-hooks-plugin/` — a first plugin exploring actions & filters

@@ -1,0 +1,55 @@
+# Local WordPress development stack
+# Two services (containers): the WordPress app + a MariaDB database.
+# Bring it up with:  docker compose up -d
+# Secrets come from the .env file in this same folder (never committed).
+
+services:
+  # -------------------------------------------------------------------
+  # The database. Stores every post, page, user, setting and option.
+  # -------------------------------------------------------------------
+  db:
+    image: mariadb:11
+    container_name: wp_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql   # DB files live in a named volume, not the repo
+    networks:
+      - wpnet
+
+  # -------------------------------------------------------------------
+  # WordPress itself: PHP + Apache, serving the site.
+  # It talks to the "db" service by that name over the private network.
+  # -------------------------------------------------------------------
+  wordpress:
+    image: wordpress:php8.3-apache
+    container_name: wp_app
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8090:80"                # host port 8090 -> container port 80
+                                 # (8080 is taken by the host's system Apache/httpd)
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    volumes:
+      - wp_data:/var/www/html    # themes, plugins, uploads live in a named volume
+    networks:
+      - wpnet
+
+# Named volumes: Docker-managed storage. Survives container restarts,
+# and keeps large/secret files OUT of the git repo.
+volumes:
+  db_data:
+  wp_data:
+
+# A private network so the two containers can find each other by name.
+networks:
+  wpnet:
